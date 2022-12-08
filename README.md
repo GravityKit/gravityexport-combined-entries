@@ -4,6 +4,7 @@ Enables ability to merge entries from multiple forms into one GravityExport down
 
 ## Installation
 
+0. **[Download the plugin file](https://github.com/gravityview/gravityexport-combined-entries/archive/refs/heads/main.zip)**
 1. Upload plugin files to your `plugins` folder, or install using WordPress' built-in Add New Plugin installer
 2. Activate the plugin
 3. Add mapping configuration using the `gk-gravityexport-combined-entries-mapping` filter hook.
