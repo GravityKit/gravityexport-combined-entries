@@ -7,18 +7,30 @@ Enables ability to merge entries from multiple forms into one GravityExport down
 0. **[Download the plugin file](https://github.com/gravityview/gravityexport-combined-entries/archive/refs/heads/main.zip)**
 1. Upload plugin files to your `plugins` folder, or install using WordPress' built-in Add New Plugin installer
 2. Activate the plugin
-3. Add mapping configuration using the `gk-gravityexport-combined-entries-mapping` filter hook.
+3. Add mapping configuration using the `gk-gravityexport-combined-entries-mapping` filter hook. [Not sure how to add code to your site?](https://docs.gravitykit.com/article/210-where-to-put-code-samples)
 
 ```php
+/**
+ * THIS CODE IS AN EXAMPLE. DO NOT USE WITHOUT MODIFICATION.
+ * 
+ * You need to update the form ids (43, 44, and 45) with your own form IDs.
+ * Also update the field IDs to match the IDs in your parent and combined forms.
+ */
 add_action( 'gk-gravityexport-combined-entries-mapping', function ( array $mapping ): array {
-	$mapping[43] = [ // For form 43 (Main form)
-		44 => [ // The combined form
-			1 => 3, // Key = field ID on the combined form
-			3 => 5, // Value = field ID on the main form
+
+	// For form 43 (the main form)
+	$mapping[43] = [
+
+		// The first combined form (update with your own form ID)
+		44 => [
+			1 => 3, // Key = field ID on the combined form. Update with your own field ID.
+			3 => 5, // Value = field ID on the main form. Update with your own field ID.
 		],
+		
+		// The second connected form (update with your own form ID)
 		45 => [
-			1 => 1,
-			3 => 4,
+			1 => 1, // Key = field ID on the combined form. Update with your own field ID.
+			3 => 4, // Value = field ID on the main form. Update with your own field ID.
 		],
 	];
 
