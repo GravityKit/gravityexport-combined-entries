@@ -7,7 +7,6 @@ Enables ability to merge entries from multiple forms into one GravityExport down
 1. Upload plugin files to your `plugins` folder, or install using WordPress' built-in Add New Plugin installer
 2. Activate the plugin
 3. Add mapping configuration using the `gk-gravityexport-combined-entries-mapping` filter hook.
-4. Use the download url for the main form and add `?combine=44,45` to merge the entries for forms `44` and `45`
 
 ```php
 add_action( 'gk-gravityexport-combined-entries-mapping', function ( array $mapping ): array {
@@ -25,6 +24,10 @@ add_action( 'gk-gravityexport-combined-entries-mapping', function ( array $mappi
 	return $mapping;
 } );
 ```
+
+4. Use the download url for the main form and add `?combine=44,45` to merge the entries for forms `44` and `45`, for example:
+
+<pre>https://www.example.com/gf-entries-in-excel/fff97e7f54b72431ab1cb5dd16ecc<strong>?combine=44,45</strong></pre>
 
 ## Changelog
 
