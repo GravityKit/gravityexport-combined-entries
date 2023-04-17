@@ -28,6 +28,9 @@ add_action( 'gk-gravityexport-combined-entries-mapping', function ( array $mappi
 
 ## Changelog
 
+### Unreleased
+* Bugfix: Fields with subfields weren't mapped properly.
+
 ### 0.1.0 on December 8, 2022
 
 * Initial release
