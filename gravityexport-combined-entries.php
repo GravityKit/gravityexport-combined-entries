@@ -3,7 +3,7 @@
 /**
  * Plugin Name:        GravityExport Combined Entries
  * Description:        Adds ability to merge entries of multiple forms into one result set with GravityExport.
- * Version:            0.1.0
+ * Version:            0.1.1
  * Author:             GravityKit
  * Author URI:         https://www.gravitykit.com
  * License:            GPLv2 or later
