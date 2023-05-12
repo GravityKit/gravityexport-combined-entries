@@ -30,6 +30,7 @@ add_action( 'gk-gravityexport-combined-entries-mapping', function ( array $mappi
 
 ### Unreleased
 * Bugfix: Fields with subfields weren't mapped properly.
+* Bugfix: Sorting could have an ambiguous field name, and therefor fail.
 
 ### 0.1.0 on December 8, 2022
 
