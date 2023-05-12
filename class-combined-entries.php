@@ -88,7 +88,8 @@ final class GravityExport_CombinedEntries {
 		array $sorting,
 		array $paging
 	): array {
-		$this->should_sort = true; // make sure to sort by form first on the query.
+		// make sure to sort by form first on the query.
+		$this->should_sort = apply_filters( 'gk/gravityexport/combined/should-sort', true );
 
 		return array_map(
 			\Closure::fromCallable( [ $this, 'remap_entry' ] ),
@@ -103,7 +104,7 @@ final class GravityExport_CombinedEntries {
 		if ( $this->should_sort ) {
 			$sql_parts['order'] = str_replace(
 				'ORDER BY',
-				sprintf( 'ORDER BY FIND_IN_SET(form_id, \'%s\'),', implode( ',', $this->get_all_form_ids() ) ),
+				sprintf( 'ORDER BY FIND_IN_SET(`t1`.`form_id`, \'%s\'),', implode( ',', $this->get_all_form_ids() ) ),
 				$sql_parts['order']
 			);
 
