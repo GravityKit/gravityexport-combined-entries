@@ -82,13 +82,14 @@ final class GravityExport_CombinedEntries {
 	 * Add the entries from the combined forms into the entries stream.
 	 */
 	private function add_combined_entries(
-		int $form_id,
+		?int $form_id,
 		?int $feed_id,
 		array $search_criteria,
 		array $sorting,
 		array $paging
 	): array {
-		$this->should_sort = true; // make sure to sort by form first on the query.
+		// make sure to sort by form first on the query.
+		$this->should_sort = apply_filters( 'gk/gravityexport/combined/should-sort', true );
 
 		return array_map(
 			\Closure::fromCallable( [ $this, 'remap_entry' ] ),
@@ -103,7 +104,7 @@ final class GravityExport_CombinedEntries {
 		if ( $this->should_sort ) {
 			$sql_parts['order'] = str_replace(
 				'ORDER BY',
-				sprintf( 'ORDER BY FIND_IN_SET(form_id, \'%s\'),', implode( ',', $this->get_all_form_ids() ) ),
+				sprintf( 'ORDER BY FIND_IN_SET(`t1`.`form_id`, \'%s\'),', implode( ',', $this->get_all_form_ids() ) ),
 				$sql_parts['order']
 			);
 
@@ -123,13 +124,12 @@ final class GravityExport_CombinedEntries {
 
 		$values = [];
 		foreach ( $entry as $key => $value ) {
-			if ( ! is_int( $key ) ) {
+			if ( ! is_numeric( $key ) ) {
 				// We only care about integers because those are the fields.
 				continue;
 			}
 
-			if ( null !== $new_key = $this->mapping[ $this->form_id ][ $entry['form_id'] ][ $key ] ?? null ) {
-				// Keep track of the values for the mapped fields on their mapped id.
+			if ( null !== $new_key = $this->get_mapping( $entry['form_id'], $key ) ) {
 				$values[ $new_key ] = $value;
 			}
 
@@ -143,5 +143,25 @@ final class GravityExport_CombinedEntries {
 		}
 
 		return $entry;
+	}
+
+	/**
+	 * Whether the field id is mapped.
+	 *
+	 * @param int|string $form_id
+	 * @param int|string $field_id
+	 *
+	 * @return string|null The mapped (sub) field id.
+	 */
+	private function get_mapping( $form_id = 0, $field_id = 0 ): ?string {
+		$mapped_id = $this->mapping[ $this->form_id ][ $form_id ][ (int) $field_id ] ?? null;
+		if ( ! $mapped_id ) {
+			return null;
+		}
+		// In case the field id is a subfield.
+		$parts    = explode( '.', $field_id );
+		$parts[0] = $mapped_id;
+
+		return implode( '.', $parts );
 	}
 }
